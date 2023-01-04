@@ -1,0 +1,18 @@
+*{
+  color: #333;
+  font-size: 16px;
+}
+body{
+  margin: 0;
+  background-color: #F7ECDE;
+  min-height: 100vh;
+}
+main{
+  background-color: #F7ECDE;
+  padding: 1%;
+  width: 100%;
+}
+.wrapper{
+  display: flex;
+  height: calc(100vh - 60px);
+}
