@@ -25,7 +25,7 @@ function send_invitation($email, $token)
   define("MAIL_TO_ADDRESS", $email);
   define("MAIL_SUBJECT", "POSSEアプリに招待されています");
   define("MAIL_BODY", "こちらから登録してください。 http://localhost:8080/admin/auth/signup.php?token=$token&email=$email");
-  define("MAIL_FROM_ADDRESS", "designare@example.jp");
+  define("MAIL_FROM_ADDRESS", "designare@exmple.jp");
   define("MAIL_HEADER", "Content-Type: text/plain; charset=UTF-8 \n".
                         "From: " . MAIL_FROM_ADDRESS . "\n".
                         "Sender: " . MAIL_FROM_ADDRESS ." \n".

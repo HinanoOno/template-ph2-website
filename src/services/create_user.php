@@ -1,6 +1,7 @@
 <?php
 require_once('../dbconnect.php');
 require('../mailer/invitation.php');
+require('../response/create_response.php');
 
 $db=getDb();
 /*$email=$_POST['email'];
@@ -53,6 +54,7 @@ try{
 $raw = file_get_contents('php://input');
 $data = (array)json_decode($raw);
 
+
 $sql = "SELECT * FROM users WHERE email = :email";
 $stmt = $db->prepare($sql);
 $stmt->bindValue(":email", $data["email"]);
@@ -65,7 +67,7 @@ if ($user) {
       "message" => "招待済みのメールアドレスです"
     ]
   ];
-  //create_response(422, $message);
+  create_response(422, $message);
   exit;
 }
 
@@ -84,14 +86,14 @@ try {
     "user_id" => $user_id,
     "token" => $token
   ]);
-
+  
   if(send_invitation($data["email"], $token)){
     $message = "メールを送信しました";
   } else {
     $message = "メールの送信に失敗しました";
   }
   $db->commit();
-  //create_response(201, $message);
+  create_response(201, $message);
 } catch(PDOException $e) {
   $db->rollBack();
   $message = [
@@ -99,10 +101,9 @@ try {
       "message" => $e->getMessage()
     ]
   ];
-  //create_response(500, $message);
+  create_response(500, $message);
+  
 }
-
-
 
 
 ?>

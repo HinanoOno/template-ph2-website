@@ -1,15 +1,14 @@
 <?php
-$dsn = 'mysql:dbname=posse;host=db';
-$user = 'root';
-$password = 'root';
-
-$dbh = new PDO($dsn, $user, $password);
-
-
-$questions = $dbh->query("SELECT * FROM questions")->fetchAll(PDO::FETCH_ASSOC);
-$is_empty=count($questions) === 0;
-
-
+require_once('../dbconnect.php');
+session_start();//これないとできなかった
+if(!isset($_SESSION['id'])){
+  header('Location: /../admin/auth/signin.php');
+}
+else{
+  $db=getDb();
+  $questions = $db->query("SELECT * FROM questions")->fetchAll(PDO::FETCH_ASSOC);
+  $is_empty=count($questions) === 0;
+}
 ?>
 
 <!DOCTYPE html>
@@ -33,7 +32,9 @@ $is_empty=count($questions) === 0;
   <script src="../assets/scripts/common.js" defer></script>
 </head>
 <body>
+  <?php include(dirname(__FILE__) . '/../component/header.php');?>
   <div class="wrapper">
+    <?php include(dirname(__FILE__) . '/../component/sidebar.php');?>
     <main>
       <div class="menu">
         <a href="./questions/create.php">問題作成</a>

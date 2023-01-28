@@ -1,5 +1,5 @@
 <?php
-/*session_start();
+session_start();
 $token=isset($_GET['token'])?$_GET['token']:null;//urlからtokenとemailを取得
 $email=isset($_GET['email'])?$_GET['email']:null;
 
@@ -7,8 +7,8 @@ if(is_null($token) || is_null($email)){
   header('Location:/');
 }
 if(isset($_SESSION["id"])){
-  header('Location: /admin/index.php')
-};*/
+  header('Location: ../index.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -41,7 +41,7 @@ if(isset($_SESSION["id"])){
           </div>
           <div class="mb-3">
             <label for="email" class="form-label">e-mail:</label>
-            <input type="text" name="email" id="email" class="form-control">
+            <input type="text" name="email" id="email" class="form-control"value="<?=$email?>">
           </div>
           <div class="mb-3">
             <label for="password" class="form-label">パスワード:</label>
@@ -51,7 +51,7 @@ if(isset($_SESSION["id"])){
             <label for="password_confirm" class="form-label">パスワード（確認用）:</label>
             <input type="password" name="password_confirm" id="password_confirm" class="form-control" >
           </div>
-          <input type="hidden" name="token" id="token">
+          <input type="hidden" name="token" id="token" value="<?=$token?>">
           <button type="submit" class="submit-btn" onclick="signup()">登録</button>
       </div>
     </main>
@@ -65,6 +65,7 @@ if(isset($_SESSION["id"])){
           email : document.querySelector('#email').value,
           password : document.querySelector('#password').value,
           password_confirm : document.querySelector('#password_confirm').value,
+          token: document.querySelector('#token').value,
         }),
         headers:{
           'Accept': 'application/json, */*',
@@ -72,10 +73,12 @@ if(isset($_SESSION["id"])){
         },
       });
       const json = await res.json()
-      if (res.status === 200) {
+      console.log(res)
+      console.log(json)
+      if(res.status===200){
         alert(json["message"])
-        location.href = '/admin/index.php'
-      } else {
+        location.href='../index.php'
+      }else{
         alert(json["error"]["message"])
       }
     }
